@@ -1,14 +1,30 @@
 package io.zipcoder;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.TreeSet;
-
 public class MainApplication {
 
-    public static void main(String[] args) {
-        //Date date = new Date();
+    public static void main(String[] args) throws InterruptedException {
+
+
+
+        long startTime = System.nanoTime();
+        Thread noLinking = new Thread(new NoLinking());
+        Thread withLinking = new Thread(new WithLinking());
+        Thread withTreeSet = new Thread(new WithTreeSet());
+
+        Thread[] threads = {noLinking,withLinking,withTreeSet};
+
+        noLinking.start();
+        withLinking.start();
+        withTreeSet.start();
+
+        for(Thread t : threads){
+            t.join();
+        }
+
+
+        long duration = (System.nanoTime() - startTime) / 1000000;
+        System.out.println("TOTAL COMPUTATION TIME: " + duration);
+
 
 //        System.out.println("Running tests with TreeSet:");
 //        long startTime3 = System.nanoTime();
@@ -23,7 +39,7 @@ public class MainApplication {
 //        System.out.println("The Adventures of Huckleberry Finn: " + words9);
 //        long duration3 = (System.nanoTime()-startTime3)/1000000;
 //        System.out.println("Process took " + duration3 + "ms to compute");
-
+//
 //        System.out.println("Running tests without linking:");
 //        long startTime = System.nanoTime();
 //        WC goodAndEvil = new WC(WC.class.getResource("/BeyondGoodAndEvil.txt").getFile());
@@ -38,26 +54,24 @@ public class MainApplication {
 //        long duration = (System.nanoTime()-startTime)/1000000;
 //        System.out.println("Process took " + duration + "ms to compute");
 //        System.out.println();
-
-        System.out.println("Running tests with linking:");
-        long startTime2 = System.nanoTime();
-        WC goodAndEvil2 = new WC(WC.class.getResource("/BeyondGoodAndEvil.txt").getFile());
-        LinkedList<Map.Entry<String,Integer>> words4 = goodAndEvil2.countWordsWithLinking();
-        System.out.println("Beyond Good and Evil: " + words4);
-        WC earnest2 = new WC(WC.class.getResource("/TheImportanceOfBeingEarnest.txt").getFile());
-        LinkedList<Map.Entry<String,Integer>> words5 = earnest2.countWordsWithLinking();
-        System.out.println("The Importance of Being Earnest: " + words5);
-        WC huckFinn2 = new WC(WC.class.getResource("/TheAdventuresOfHuckleberryFinn").getFile());
-        LinkedList<Map.Entry<String,Integer>> words6 = huckFinn2.countWordsWithLinking();
-        System.out.println("The Adventures of Huckleberry Finn: " + words6);
-        long duration2 = (System.nanoTime()-startTime2)/1000000;
-        System.out.println("Process took " + duration2 + "ms to compute");
-        System.out.println();
+//
+//        System.out.println("Running tests with linking:");
+//        long startTime2 = System.nanoTime();
+//        WC goodAndEvil2 = new WC(WC.class.getResource("/BeyondGoodAndEvil.txt").getFile());
+//        LinkedList<Map.Entry<String,Integer>> words4 = goodAndEvil2.countWordsWithLinking();
+//        System.out.println("Beyond Good and Evil: " + words4);
+//        WC earnest2 = new WC(WC.class.getResource("/TheImportanceOfBeingEarnest.txt").getFile());
+//        LinkedList<Map.Entry<String,Integer>> words5 = earnest2.countWordsWithLinking();
+//        System.out.println("The Importance of Being Earnest: " + words5);
+//        WC huckFinn2 = new WC(WC.class.getResource("/TheAdventuresOfHuckleberryFinn").getFile());
+//        LinkedList<Map.Entry<String,Integer>> words6 = huckFinn2.countWordsWithLinking();
+//        System.out.println("The Adventures of Huckleberry Finn: " + words6);
+//        long duration2 = (System.nanoTime()-startTime2)/1000000;
+//        System.out.println("Process took " + duration2 + "ms to compute");
+//        System.out.println();
 
 
     }
-
-
 
 
 }
